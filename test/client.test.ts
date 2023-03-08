@@ -1,5 +1,3 @@
-import fetch from 'cross-fetch'
-
 import { createClient } from '../src/index'
 
 const URL = process.env.EMBEDBASE_URL || 'https://embedbase-hosted-usx5gpslaq-uc.a.run.app'
