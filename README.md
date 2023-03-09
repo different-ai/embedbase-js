@@ -7,8 +7,8 @@ Embedbase is an open-source API to compute ML embeddings. This SDK makes it easy
 ## Table of contents
 - [What is it](#what-is-it)
 - [Installation](#installation)
-- [Fetching Embeddings](#fetching-embeddings)
-- [Adding Data](#adding-data)
+- [Searching](#fetching-embeddings)
+- [Adding data](#adding-data)
 - [Creating a recommendation engine with zero ML experience](#how-to-create-a-reccomendation-engine)
 
 
@@ -50,8 +50,8 @@ This is the official typescript client for Embedbase. Embedbase is an open-sourc
 You can install @embedbase/embedbase-js via the terminal.
 
 
-```sh
-npm install @embedbase/embedbase-js
+```
+npm i embedbase-js
 ```
 
 
@@ -59,20 +59,12 @@ npm install @embedbase/embedbase-js
 ```ts
 
 import { createClient } from '@embedbase/embedbase-js'
-import { initPostgres } from '@embedbase/db/postgres'
 
-initPostgres('postgres://localhost:5432/embedbase')
 
 // you can find the api key at https://embedbase.com
-// you can find a list of supported dbs at https://docs.embedbase.com/dbs
 const embedbase = createClient('api-key', 
     {
-        // if you leave the db field empty, it will use embedbase's db
-        db: postgres,
         embedbaseURL: 'https://app.embedbase.com',
-        // this allows you to add plugins to the client
-        // and gives you access to `.recommend`
-        plugins: ['@embedbase/recommendation-engine']
     })
 
 ```
@@ -81,9 +73,9 @@ const embedbase = createClient('api-key',
 ### Fetching Embeddings
 ```ts
 // fetching data
-const { data, error } = await embedbase
+const data = await embedbase
   .dataset('amazon-reviews')
-  .search('best hot dogs accessories', {limit: 3})
+  .search('best hot dogs accessories', {top_k: 3})
 
 
 console.log(data)
@@ -105,7 +97,7 @@ console.log(data)
 ### Adding Data
 
 ```js
-const { data, error } = await embedbase
+const data = await embedbase
   .dataset('amazon-reviews')
   // embeddings are extremely good for retrieving unstructured data
   // in this example we store an unparsable html string
