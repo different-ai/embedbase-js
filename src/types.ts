@@ -11,7 +11,7 @@ export interface SearchData {
 }
 
 export interface SearchOptions {
-  top_k?: number
+  limit?: number
 }
 //     {
 //     status: 'success',

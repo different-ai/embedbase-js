@@ -46,9 +46,9 @@ export default class EmbedbaseClien {
   async search(
     dataset: string,
     query: string,
-    options: { top_k?: number } = {}
+    options: { limit?: number } = {}
   ): Promise<SearchSimilarity[]> {
-    const top_k = options.top_k || 5
+    const top_k = options.limit || 5
 
     const searchUrl = `${this.embedbaseApiUrl}/${dataset}/search`
     const res: Response = await fetch(searchUrl, {

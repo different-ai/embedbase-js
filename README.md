@@ -47,7 +47,7 @@ This is the official typescript client for Embedbase. Embedbase is an open-sourc
 ## Installation
 
 
-You can install @embedbase/embedbase-js via the terminal.
+You can install embedbase-js via the terminal.
 
 
 ```
@@ -58,7 +58,7 @@ npm i embedbase-js
 ### Initializing
 ```ts
 
-import { createClient } from '@embedbase/embedbase-js'
+import { createClient } from 'embedbase-js'
 
 
 // you can find the api key at https://embedbase.xyz
@@ -71,7 +71,7 @@ const embedbase = createClient(url, apiKey)
 // fetching data
 const data = await embedbase
   .dataset('amazon-reviews')
-  .search('best hot dogs accessories', {top_k: 3})
+  .search('best hot dogs accessories', {limit: 3})
 
 
 console.log(data)
