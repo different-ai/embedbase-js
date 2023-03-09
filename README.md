@@ -62,6 +62,9 @@ import { createClient } from 'embedbase-js'
 
 
 // you can find the api key at https://embedbase.xyz
+const apiKey = 'your api key'
+// this is using the hosted instance
+const url = 'https://api.embedbase.xyz'
 const embedbase = createClient(url, apiKey)
 
 ```
