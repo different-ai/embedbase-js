@@ -62,13 +62,9 @@ import { createClient } from '@embedbase/embedbase-js'
 
 
 // you can find the api key at https://embedbase.com
-const embedbase = createClient('api-key', 
-    {
-        embedbaseURL: 'https://app.embedbase.com',
-    })
+const embedbase = createClient(url, apiKey)
 
 ```
-
 
 ### Fetching Embeddings
 ```ts
