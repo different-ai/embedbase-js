@@ -19,11 +19,11 @@ Embedbase is an open-source API to compute ML embeddings. This SDK makes it easy
 
 ## What's Included
 - [x] Hosted Instance Working on top of Embedbase. [Sign Up](https://embedbase.xyz)
-- [x] Authentication and Authorization. [Docs](https://docs.embedbase.com/auth)
-- [x] Typescript SDK. [Docs](https://docs.embedbase.com/sdk)
+- [x] Authentication and Authorization. [Docs](https://docs.embedbase.xyz/auth)
+- [x] Typescript SDK. [Docs](https://docs.embedbase.xyz/sdk)
   - [x] Server-side embeddings computation
   - [ ] Local embeddings computation 
-- [x] Dashboard [Docs](https://docs.embedbase.com/dashboard)
+- [x] Dashboard [Docs](https://docs.embedbase.xyz/dashboard)
   - [x] Search Datasets
   - [x] Use the playground to get started
   - [ ] Visualize datasets (coming soon)
@@ -61,7 +61,7 @@ npm i embedbase-js
 import { createClient } from '@embedbase/embedbase-js'
 
 
-// you can find the api key at https://embedbase.com
+// you can find the api key at https://embedbase.xyz
 const embedbase = createClient(url, apiKey)
 
 ```
@@ -111,7 +111,7 @@ console.log(data)
 //    "metadata": {
 //      "created_at": "2020-10-29T12:00:00.000Z",
 //      "updated_at": "2020-10-29T12:00:00.000Z"
-//      "location": "https://app.embedbase.com/datasets/amazon-reviews/
+//      "location": "https://app.embedbase.xyz/datasets/amazon-reviews/
 //    }
 // }
 ```
