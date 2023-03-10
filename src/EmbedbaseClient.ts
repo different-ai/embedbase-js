@@ -2,10 +2,11 @@ import fetch from 'cross-fetch'
 import type {
   AddData,
   ClientAddData,
+  ClientContextData,
+  ClientSearchData,
   Fetch,
   SearchData,
   SearchOptions,
-  SearchSimilarity,
 } from './types'
 
 /**
@@ -40,6 +41,22 @@ export default class EmbedbaseClien {
     }
   }
 
+  async createContext(
+    dataset: string,
+    query: string,
+    options: { limit?: number } = {}
+  ): Promise<ClientContextData> {
+    const top_k = options.limit || 5
+    const searchUrl = `${this.embedbaseApiUrl}/${dataset}/search`
+    const res: Response = await fetch(searchUrl, {
+      method: 'POST',
+      headers: this.headers,
+      body: JSON.stringify({ query, top_k }),
+    })
+    const data: SearchData = await res.json()
+    return data.similarities.map((similarity) => similarity.data)
+  }
+
   /**
    * Embedbase Search allows you to search for most similar documents in your Embedbase database.
    */
@@ -47,7 +64,7 @@ export default class EmbedbaseClien {
     dataset: string,
     query: string,
     options: { limit?: number } = {}
-  ): Promise<SearchSimilarity[]> {
+  ): Promise<ClientSearchData> {
     const top_k = options.limit || 5
 
     const searchUrl = `${this.embedbaseApiUrl}/${dataset}/search`
@@ -84,15 +101,18 @@ export default class EmbedbaseClien {
   }
 
   dataset(dataset: string): {
-    search: (query: string, options?: SearchOptions) => Promise<SearchSimilarity[]>
+    search: (query: string, options?: SearchOptions) => Promise<ClientSearchData>
     add: (document: string) => Promise<ClientAddData>
     batchAdd: (documents: string[]) => Promise<ClientAddData[]>
+    createContext: (query: string, options?: SearchOptions) => Promise<ClientContextData>
   } {
     return {
       search: async (query: string, options?: SearchOptions) =>
         this.search(dataset, query, options),
       add: async (document: string) => this.add(dataset, document),
       batchAdd: async (documents: string[]) => this.batchAdd(dataset, documents),
+      createContext: async (query: string, options?: SearchOptions) =>
+        this.createContext(dataset, query, options),
     }
   }
 }

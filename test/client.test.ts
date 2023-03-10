@@ -4,6 +4,7 @@ const URL = process.env.EMBEDBASE_URL || 'https://embedbase-hosted-usx5gpslaq-uc
 const KEY = process.env.EMBEDBASE_API_KEY || 'some.fake.KEY'
 
 const embedbase = createClient(URL, KEY)
+const RANDOM_DATASET_NAME = new Date().getTime().toString()
 
 test('it should create the client connection', async () => {
   expect(embedbase).toBeDefined()
@@ -30,33 +31,10 @@ describe('Check if headers are set', () => {
 })
 
 describe('Check if the client is able to fetch data', () => {
-  test('should return an array of similarities', async () => {
-    const embedbase = createClient(URL, KEY)
-
-    const data = await embedbase.dataset('test-amazon-product-reviews').search('hello')
-    console.log(data)
-
-    expect(data).toBeDefined()
-    expect(data).toBeInstanceOf(Array)
-  })
-  // this is not striclty to just a simplification for our tests
-  test('should use return equal element of top_k', async () => {
-    const embedbase = createClient(URL, KEY)
-
-    const data = await embedbase
-      .dataset('test-amazon-product-reviews')
-      .search('test', { top_k: 10 })
-
-    expect(data).toBeDefined()
-    expect(data).toBeInstanceOf(Array)
-    expect(data).toHaveLength(10)
-  })
   test('should be able to add elements to a dataset,   ', async () => {
     const embedbase = createClient(URL, KEY)
     // just used to make sure we're creating new datasets
-    const date = new Date().getTime()
-    const data = await embedbase.dataset(`test-amazon-product-reviews ${date}`).add('hello')
-    console.log(data)
+    const data = await embedbase.dataset(RANDOM_DATASET_NAME).add('hello')
     expect(data).toBeDefined()
     expect(data).toHaveProperty('id')
     expect(data).toHaveProperty('status')
@@ -64,13 +42,52 @@ describe('Check if the client is able to fetch data', () => {
 
   test('should be able to batch add elements to a dataset', async () => {
     const embedbase = createClient(URL, KEY)
-    const date = new Date().getTime()
     const data = await embedbase
-      .dataset(`test-amazon-product-reviews ${date}`)
-      .batchAdd(['test', 'my', 'love'])
-    console.log(data)
+      .dataset(RANDOM_DATASET_NAME)
+      .batchAdd([
+        'test',
+        'my',
+        'love',
+        'hello',
+        'world',
+        'wtest',
+        'helloooo',
+        'johny',
+        'continue',
+        'jurassic',
+      ])
     expect(data).toBeDefined()
     expect(data).toBeInstanceOf(Array)
-    expect(data).toHaveLength(3)
+    expect(data).toHaveLength(10)
+  })
+
+  test('should return an array of similarities', async () => {
+    const embedbase = createClient(URL, KEY)
+
+    const data = await embedbase.dataset(RANDOM_DATASET_NAME).search('hello')
+    console.log(data)
+
+    expect(data).toBeDefined()
+    expect(data).toBeInstanceOf(Array)
+  })
+
+  // this is not striclty to just a simplification for our tests
+  test('should use return equal element of top_k', async () => {
+    const embedbase = createClient(URL, KEY)
+
+    const data = await embedbase.dataset(RANDOM_DATASET_NAME).search('test', { limit: 10 })
+
+    expect(data).toBeDefined()
+    expect(data).toBeInstanceOf(Array)
+    expect(data).toHaveLength(10)
+  })
+
+  test('should return a list of strings when using createContext', async () => {
+    const embedbase = createClient(URL, KEY)
+
+    const data = await embedbase.dataset(RANDOM_DATASET_NAME).createContext('test', { limit: 10 })
+
+    expect(data).toBeDefined()
+    expect(data).toHaveLength(10)
   })
 })

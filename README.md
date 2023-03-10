@@ -119,6 +119,15 @@ console.log(data)
 // }
 ```
 
+## How to create a q&a system
+
+```js
+
+
+
+```
+
+
 ## How to create a reccomendation engine
 
 ```js
@@ -136,6 +145,6 @@ coming soon
 ## How to create a Q&A documentation
 
 ```js
-coming soon
+
 ```
 # embedbase-js

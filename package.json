@@ -7,8 +7,8 @@
     "typescript",
     "embedbase"
   ],
-  "homepage": "https://github.com/another-ai/embedbase-js",
-  "bugs": "https://github.com/another-ai/embedbase-js/issues",
+  "homepage": "https://github.com/different-ai/embedbase-js",
+  "bugs": "https://github.com/different-ai/embedbase-js/issues",
   "license": "MIT",
   "author": "Different AI",
   "files": [
@@ -19,7 +19,7 @@
   "module": "dist/module/index.js",
   "types": "dist/module/index.d.ts",
   "sideEffects": false,
-  "repository": "another-ai/embedbase-js",
+  "repository": "different-ai/embedbase-js",
   "scripts": {
     "clean": "rimraf dist",
     "format": "prettier --write \"{src,test}/**/*.ts\"",
@@ -27,11 +27,9 @@
     "build:main": "tsc -p tsconfig.json",
     "build:module": "tsc -p tsconfig.module.json",
     "types-generate": "dts-gen -m 'embedbase-js' -s",
-    "test": "jest --runInBand",
-    "test:coverage": "jest --runInBand --coverage",
-    "test:db": "cd infra/db && docker-compose down && docker-compose up -d && sleep 5",
+    "test": "jest ",
+    "test:coverage": "jest --coverage",
     "test:watch": "jest --watch --verbose false --silent false",
-    "test:clean": "cd infra/db && docker-compose down",
     "docs": "typedoc --entryPoints src/index.ts --out docs/v1 --includes src/**/*.ts",
     "docs:json": "typedoc --entryPoints src/index.ts --includes src/**/*.ts --json docs/v1/spec.json --excludeExternals"
   },

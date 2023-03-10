@@ -27,6 +27,9 @@ export interface AddData {
   inserted_ids: string[]
 }
 
+export type ClientContextData = string[]
+
+export type ClientSearchData = SearchSimilarity[]
 export interface ClientAddData {
   id: string
   status: 'success' | 'error'
