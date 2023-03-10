@@ -1,28 +1,41 @@
-⚠️🔥 (sdk is still in private, if you want to have early access contact me at [email](mailto:ben@embedbase.xyz)
+⚠️🔥 (sdk is still in alpha, if you if you have some feedback readch out to [ben@embedbase.xyz](mailto:ben@embedbase.xyz)
+
 ## Embedbase
 
 Embedbase is an open-source API to compute ML embeddings. This SDK makes it easy to use Embedbase in your app.
 
 
+Before you start, you need get a an API key at [embedbase.xyz](https://embedbase.xyz).
+
+*Note: we're working on a fully client-side SDK. In the meantime, you can use the hosted instance of Embedbase.*
+
+
+```
+npm i embedbase-js
+```
+
 ## Table of contents
+
 - [What is it](#what-is-it)
 - [Installation](#installation)
 - [Searching](#fetching-embeddings)
 - [Adding data](#adding-data)
+- [Creating a context](#creating-a-context)
 - [Creating a recommendation engine with zero ML experience](#how-to-create-a-reccomendation-engine)
 
-
 ## Design philosophy
+
 - Simple
 - Open-source
 - Composable (integrates well with LLM & various databases)
 
 ## What's Included
+
 - [x] Hosted Instance Working on top of Embedbase. [Sign Up](https://embedbase.xyz)
 - [x] Authentication and Authorization. [Docs](https://docs.embedbase.xyz/auth)
 - [x] Typescript SDK. [Docs](https://docs.embedbase.xyz/sdk)
   - [x] Server-side embeddings computation
-  - [ ] Local embeddings computation 
+  - [ ] Local embeddings computation
 - [x] Dashboard [Docs](https://docs.embedbase.xyz/dashboard)
   - [x] Search Datasets
   - [x] Use the playground to get started
@@ -39,43 +52,38 @@ Embedbase is fully open-source and is designed to accompany you from your first 
 This is the official typescript client for Embedbase. Embedbase is an open-source API to manage ML embeddings.
 
 ## Who is it for
+
 - App developers who want to add ML to their apps without having to worry about the infrastructure
 - ML engineers who want to prototype classification systems
 
-
-
 ## Installation
 
-
 You can install embedbase-js via the terminal.
-
 
 ```
 npm i embedbase-js
 ```
 
-
 ### Initializing
+
 ```ts
-
 import { createClient } from 'embedbase-js'
-
 
 // you can find the api key at https://embedbase.xyz
 const apiKey = 'your api key'
 // this is using the hosted instance
 const url = 'https://api.embedbase.xyz'
-const embedbase = createClient(url, apiKey)
 
+const embedbase = createClient(url, apiKey)
 ```
 
-### Fetching Embeddings
+### Searching datasets
+
 ```ts
 // fetching data
 const data = await embedbase
   .dataset('amazon-reviews')
-  .search('best hot dogs accessories', {limit: 3})
-
+  .search('best hot dogs accessories', { limit: 3 })
 
 console.log(data)
 // [
@@ -93,14 +101,14 @@ console.log(data)
 //   },
 // ]
 ```
+
 ### Adding Data
 
 ```js
-const data = await embedbase
-  .dataset('amazon-reviews')
-  // embeddings are extremely good for retrieving unstructured data
+const data =
+  await // embeddings are extremely good for retrieving unstructured data
   // in this example we store an unparsable html string
-  .add(`
+  embedbase.dataset('amazon-reviews').add(`
   <div>
     <span>Lightweight. Telescopic. Easy zipper case for storage. Didn't put in dishwasher. Still perfect after many uses.</span>
 `)
@@ -111,30 +119,37 @@ console.log(data)
 //   "id": "eiew823",
 //   "data": "Lightweight. Telescopic. Easy zipper case for storage.
 //          Didn't put in dishwasher. Still perfect after many uses."
-//    "metadata": {
-//      "created_at": "2020-10-29T12:00:00.000Z",
-//      "updated_at": "2020-10-29T12:00:00.000Z"
-//      "location": "https://app.embedbase.xyz/datasets/amazon-reviews/
-//    }
+//     }
 // }
 ```
 
-## How to create a q&a system
+### Creating a "context"
+
+`createContext` is very similar to `.search` but it returns strings instead of an object. This is useful if you want to easily feed it to GPT.
 
 ```js
+// you can create a context to store data
+const data = await embedbase
+  .dataset('my-documentation')
+  .createContext('my-context')
 
+console.log(data)
+[
+ "Embedbase API allows to store unstructured data...",
+ "Embedbase API has 3 main functions a) provides a plug and play solution to store embeddings b) makes it easy to connect to get the right data into llms c)..",
+ "Embedabase API is self-hostable...",
 
-
+]
 ```
+
+
 
 
 ## How to create a reccomendation engine
 
 ```js
 coming soon
-
-
-```
+````
 
 ## How to do search engine
 
@@ -145,6 +160,5 @@ coming soon
 ## How to create a Q&A documentation
 
 ```js
-
+coming soon
 ```
-# embedbase-js
