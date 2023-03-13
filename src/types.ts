@@ -13,24 +13,22 @@ export interface SearchData {
 export interface SearchOptions {
   limit?: number
 }
-//     {
-//     status: 'success',
-//     ignored_ids: [],
-//     inserted_ids: [
-//       '30a3abf444a6fe3a64d737cacf18f3d51e0b03b58d3e2837f02eaea6509e59e3'
-//     ]
-//   }
 
+export interface AddDataResult {
+  id: string,
+  data: string,
+  embedding: number[],
+  hash: string
+}
 export interface AddData {
-  status: 'success' | 'error'
-  ignored_ids: string[]
-  inserted_ids: string[]
+  results?: AddDataResult[]
+  error?: string
 }
 
 export type ClientContextData = string[]
 
 export type ClientSearchData = SearchSimilarity[]
 export interface ClientAddData {
-  id: string
+  id?: string
   status: 'success' | 'error'
 }

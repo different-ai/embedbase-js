@@ -86,7 +86,7 @@ export default class EmbedbaseClien {
       body: JSON.stringify({ documents: [{ data: document }] }),
     })
     const data: AddData = await res.json()
-    return { id: data.inserted_ids[0] || data.ignored_ids[0], status: data.status }
+    return { id: data.results?.[0]?.id, status: data.error ? 'error' : 'success' }
   }
 
   async batchAdd(dataset: string, documents: string[]): Promise<ClientAddData[]> {
@@ -97,7 +97,7 @@ export default class EmbedbaseClien {
       body: JSON.stringify({ documents: documents.map((d) => ({ data: d })) }),
     })
     const data: AddData = await res.json()
-    return data.inserted_ids.map((id) => ({ id, status: data.status }))
+    return data.results.map((result) => ({ id: result.id, status: data.error ? 'error' : 'success' }))
   }
 
   dataset(dataset: string): {
