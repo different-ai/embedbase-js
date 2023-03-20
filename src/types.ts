@@ -39,3 +39,8 @@ export interface ClientAddData {
   id?: string
   status: 'success' | 'error'
 }
+
+export interface ClientDatasets {
+  datasetId: string
+  documentsCount: number
+}

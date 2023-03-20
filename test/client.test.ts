@@ -139,4 +139,24 @@ describe('Check if the client is able to fetch data', () => {
     expect(data).toBeDefined()
     expect(data).toHaveLength(10)
   })
+
+  test('should return a list of datasets', async () => {
+    const embedbase = createClient(URL, KEY)
+
+    await Promise.all([
+      embedbase.dataset('foo').add('test'),
+      embedbase.dataset('bar').add('test'),
+      embedbase.dataset('baz').add('test'),
+    ])
+
+    const data = await embedbase.datasets()
+
+    expect(data).toBeDefined()
+    expect(data).toBeInstanceOf(Array)
+    expect(data.length).toBeGreaterThanOrEqual(3)
+    const datasetIds = data.map((dataset) => dataset.datasetId)
+    expect(datasetIds).toContain('foo')
+    expect(datasetIds).toContain('bar')
+    expect(datasetIds).toContain('baz')
+  })
 })

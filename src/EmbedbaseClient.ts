@@ -8,7 +8,9 @@ import type {
   SearchData,
   SearchOptions,
   BatchAddDocument,
+  ClientDatasets,
 } from './types'
+import { camelize } from './utils'
 
 /**
  * Embedbase Client.
@@ -118,5 +120,15 @@ export default class EmbedbaseClien {
       createContext: async (query: string, options?: SearchOptions) =>
         this.createContext(dataset, query, options),
     }
+  }
+
+  async datasets(): Promise<ClientDatasets[]> {
+    const datasetsUrl = `${this.embedbaseApiUrl}/datasets`
+    const res: Response = await fetch(datasetsUrl, {
+      method: 'GET',
+      headers: this.headers,
+    })
+    const data: ClientDatasets[] = camelize((await res.json()).datasets)
+    return data
   }
 }
