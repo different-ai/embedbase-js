@@ -21,6 +21,8 @@ npm i embedbase-js
 - [Searching](#fetching-embeddings)
 - [Adding data](#adding-data)
 - [Creating a context](#creating-a-context)
+- [Adding metadata](#adding-metadata)
+- [Listing datasets](#listing-datasets)
 - [Creating a recommendation engine with zero ML experience](#how-to-create-a-reccomendation-engine)
 
 ## Design philosophy
@@ -140,7 +142,35 @@ console.log(data)
 ]
 ```
 
+### Adding metadata
 
+```js
+const data =
+  await
+  embedbase.dataset('amazon-reviews').add(`
+  <div>
+    <span>Lightweight. Telescopic. Easy zipper case for storage. Didn't put in dishwasher. Still perfect after many uses.</span>
+    // metadata can be anything you want that will appear in the search results later
+`, {category: 'smallItems', user: 'bob'})
+
+console.log(data)
+//
+// {
+//   "id": "eiew823",
+//   "data": "Lightweight. Telescopic. Easy zipper case for storage.
+//          Didn't put in dishwasher. Still perfect after many uses.",
+//   "metadata": {"category": "smallItems", "user": "bob"}
+// }
+```
+
+
+### Listing datasets
+
+```js
+const data = await embedbase.datasets()
+console.log(data)
+// [{"datasetId": "amazon-reviews", "documentsCount": 2}]
+```
 
 
 ## How to create a recommendation engine
