@@ -7,6 +7,7 @@ import type {
   Fetch,
   SearchData,
   SearchOptions,
+  BatchAddDocument,
 } from './types'
 
 /**
@@ -78,39 +79,42 @@ export default class EmbedbaseClien {
     return data.similarities
   }
 
-  async add(dataset: string, document: string): Promise<ClientAddData> {
+  async add(dataset: string, document: string, metadata?: unknown): Promise<ClientAddData> {
     const addUrl = `${this.embedbaseApiUrl}/${dataset}`
     const res: Response = await fetch(addUrl, {
       method: 'POST',
       headers: this.headers,
-      body: JSON.stringify({ documents: [{ data: document }] }),
+      body: JSON.stringify({ documents: [{ data: document, metadata: metadata }] }),
     })
     const data: AddData = await res.json()
     return { id: data.results?.[0]?.id, status: data.error ? 'error' : 'success' }
   }
 
-  async batchAdd(dataset: string, documents: string[]): Promise<ClientAddData[]> {
+  async batchAdd(dataset: string, documents: BatchAddDocument[]): Promise<ClientAddData[]> {
     const addUrl = `${this.embedbaseApiUrl}/${dataset}`
     const res: Response = await fetch(addUrl, {
       method: 'POST',
       headers: this.headers,
-      body: JSON.stringify({ documents: documents.map((d) => ({ data: d })) }),
+      body: JSON.stringify({ documents: documents }),
     })
     const data: AddData = await res.json()
-    return data.results.map((result) => ({ id: result.id, status: data.error ? 'error' : 'success' }))
+    return data.results.map((result) => ({
+      id: result.id,
+      status: data.error ? 'error' : 'success',
+    }))
   }
 
   dataset(dataset: string): {
     search: (query: string, options?: SearchOptions) => Promise<ClientSearchData>
-    add: (document: string) => Promise<ClientAddData>
-    batchAdd: (documents: string[]) => Promise<ClientAddData[]>
+    add: (document: string, metadata?: unknown) => Promise<ClientAddData>
+    batchAdd: (documents: BatchAddDocument[]) => Promise<ClientAddData[]>
     createContext: (query: string, options?: SearchOptions) => Promise<ClientContextData>
   } {
     return {
       search: async (query: string, options?: SearchOptions) =>
         this.search(dataset, query, options),
-      add: async (document: string) => this.add(dataset, document),
-      batchAdd: async (documents: string[]) => this.batchAdd(dataset, documents),
+      add: async (document: string, metadata?: unknown) => this.add(dataset, document, metadata),
+      batchAdd: async (documents: BatchAddDocument[]) => this.batchAdd(dataset, documents),
       createContext: async (query: string, options?: SearchOptions) =>
         this.createContext(dataset, query, options),
     }

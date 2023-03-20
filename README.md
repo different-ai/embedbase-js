@@ -119,7 +119,6 @@ console.log(data)
 //   "id": "eiew823",
 //   "data": "Lightweight. Telescopic. Easy zipper case for storage.
 //          Didn't put in dishwasher. Still perfect after many uses."
-//     }
 // }
 ```
 
@@ -138,20 +137,19 @@ console.log(data)
  "Embedbase API allows to store unstructured data...",
  "Embedbase API has 3 main functions a) provides a plug and play solution to store embeddings b) makes it easy to connect to get the right data into llms c)..",
  "Embedabase API is self-hostable...",
-
 ]
 ```
 
 
 
 
-## How to create a reccomendation engine
+## How to create a recommendation engine
 
 ```js
 coming soon
-````
+```
 
-## How to do search engine
+## How to build a search engine
 
 ```js
 coming soon

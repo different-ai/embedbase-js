@@ -1,6 +1,12 @@
 import { createClient } from '../src/index'
 
-const URL = process.env.EMBEDBASE_URL || 'https://embedbase-hosted-usx5gpslaq-uc.a.run.app'
+try {
+  require('dotenv').config({ path: './.env' });
+} catch (e) {
+  console.log('No .env file found or dotenv is not installed')
+}
+
+const URL = process.env.EMBEDBASE_URL || 'https://api.embedbase.xyz'
 const KEY = process.env.EMBEDBASE_API_KEY || 'some.fake.KEY'
 
 const embedbase = createClient(URL, KEY)
@@ -42,20 +48,48 @@ describe('Check if the client is able to fetch data', () => {
 
   test('should be able to batch add elements to a dataset', async () => {
     const embedbase = createClient(URL, KEY)
+    const inputs = [
+      'test',
+      'my',
+      'love',
+      'hello',
+      'world',
+      'wtest',
+      'helloooo',
+      'johny',
+      'continue',
+      'jurassic',
+    ]
     const data = await embedbase
       .dataset(RANDOM_DATASET_NAME)
-      .batchAdd([
-        'test',
-        'my',
-        'love',
-        'hello',
-        'world',
-        'wtest',
-        'helloooo',
-        'johny',
-        'continue',
-        'jurassic',
-      ])
+      .batchAdd(inputs.map((input) => ({ data: input })))
+    expect(data).toBeDefined()
+    expect(data).toBeInstanceOf(Array)
+    expect(data).toHaveLength(10)
+  })
+
+  test('should be able to batch add elements with metadata to a dataset', async () => {
+    const embedbase = createClient(URL, KEY)
+    const inputs = [
+      'test',
+      'my',
+      'love',
+      'hello',
+      'world',
+      'wtest',
+      'helloooo',
+      'johny',
+      'continue',
+      'jurassic',
+    ]
+    const data = await embedbase
+      .dataset(RANDOM_DATASET_NAME)
+      .batchAdd(inputs.map((input) => ({
+        data: input,
+        metadata: {
+          timestamp: new Date().getTime(),
+        }
+      })))
     expect(data).toBeDefined()
     expect(data).toBeInstanceOf(Array)
     expect(data).toHaveLength(10)
@@ -69,6 +103,21 @@ describe('Check if the client is able to fetch data', () => {
 
     expect(data).toBeDefined()
     expect(data).toBeInstanceOf(Array)
+  })
+
+  test('should return an array of similarities with metadata', async () => {
+    const embedbase = createClient(URL, KEY)
+    await embedbase
+      .dataset(RANDOM_DATASET_NAME)
+      .add('hello', {
+        timestamp: new Date().getTime(),
+      })
+    const data = await embedbase.dataset(RANDOM_DATASET_NAME).search('hello')
+    console.log(data)
+
+    expect(data).toBeDefined()
+    expect(data).toBeInstanceOf(Array)
+    expect(data[0]).toHaveProperty('metadata')
   })
 
   // this is not striclty to just a simplification for our tests
