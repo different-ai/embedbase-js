@@ -8,6 +8,8 @@ export interface BatchAddDocument {
 export interface SearchSimilarity {
   similiarity: number
   data: string
+  embedding: number[]
+  hash: string
   metadata?: unknown
 }
 

@@ -4,8 +4,8 @@ export const stringifyList = (list: any[]) => {
 
 /**
  * Camelize object recursively
- * @param obj 
- * @returns 
+ * @param obj
+ * @returns
  */
 export const camelize = <T>(obj: any): T => {
   if (typeof obj !== 'object' || obj === null) {

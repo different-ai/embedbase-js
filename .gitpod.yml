@@ -2,11 +2,6 @@
 tasks:
   - init: npm install && npm run build
 
-  - name: Generate .env
-    command: |
-      eval $(gp env -e)
-      echo "$EMBEDBASE_API_KEY" > .env
-
 vscode:
   # list as bullet points installed extensions:
   # code --list-extensions | xargs -L 1 echo - 

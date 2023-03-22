@@ -1,7 +1,7 @@
 import { createClient } from '../src/index'
 
 try {
-  require('dotenv').config({ path: './.env' });
+  require('dotenv').config({ path: './.env' })
 } catch (e) {
   console.log('No .env file found or dotenv is not installed')
 }
@@ -82,14 +82,14 @@ describe('Check if the client is able to fetch data', () => {
       'continue',
       'jurassic',
     ]
-    const data = await embedbase
-      .dataset(RANDOM_DATASET_NAME)
-      .batchAdd(inputs.map((input) => ({
+    const data = await embedbase.dataset(RANDOM_DATASET_NAME).batchAdd(
+      inputs.map((input) => ({
         data: input,
         metadata: {
           timestamp: new Date().getTime(),
-        }
-      })))
+        },
+      }))
+    )
     expect(data).toBeDefined()
     expect(data).toBeInstanceOf(Array)
     expect(data).toHaveLength(10)
@@ -97,21 +97,25 @@ describe('Check if the client is able to fetch data', () => {
 
   test('should return an array of similarities', async () => {
     const embedbase = createClient(URL, KEY)
+    await embedbase.dataset(RANDOM_DATASET_NAME).add('hello')
 
     const data = await embedbase.dataset(RANDOM_DATASET_NAME).search('hello')
     console.log(data)
 
     expect(data).toBeDefined()
     expect(data).toBeInstanceOf(Array)
+    expect(data[0]).toHaveProperty('score')
+    expect(data[0]).toHaveProperty('data')
+    expect(data[0]).toHaveProperty('embedding')
+    expect(data[0]).toHaveProperty('hash')
+    expect(data[0].data).toBe('hello')
   })
 
   test('should return an array of similarities with metadata', async () => {
     const embedbase = createClient(URL, KEY)
-    await embedbase
-      .dataset(RANDOM_DATASET_NAME)
-      .add('hello', {
-        timestamp: new Date().getTime(),
-      })
+    await embedbase.dataset(RANDOM_DATASET_NAME).add('hello', {
+      timestamp: new Date().getTime(),
+    })
     const data = await embedbase.dataset(RANDOM_DATASET_NAME).search('hello')
     console.log(data)
 
