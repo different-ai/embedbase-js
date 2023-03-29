@@ -41,7 +41,14 @@ npm i embedbase-js
 - [x] Dashboard [Docs](https://docs.embedbase.xyz/dashboard)
   - [x] Search Datasets
   - [x] Use the playground to get started
-  - [ ] Visualize datasets (coming soon)
+  - [x] Ask question to your datasets
+- [x] Split data for optimal embeddings performance
+  - [x] by tokens
+  - [x] by sentences
+  - [x] for python
+  - [x] for javascript
+  - [ ] for markdown
+
 
 ## Why Embedbase
 
