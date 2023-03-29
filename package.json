@@ -22,7 +22,7 @@
   "repository": "different-ai/embedbase-js",
   "scripts": {
     "clean": "rimraf dist",
-    "format": "prettier --write \"{src,test}/**/*.ts\"",
+    "format": "prettier --write \"{src,test}/**/*.ts\" --ignore-path test/samples/sample.ts",
     "build": "run-s clean format build:*",
     "build:main": "tsc -p tsconfig.json",
     "build:module": "tsc -p tsconfig.module.json",

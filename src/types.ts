@@ -5,7 +5,6 @@ export interface BatchAddDocument {
   metadata?: Metadata | unknown
 }
 
-
 /**
  * The Metadata interface defines a structure for the basic metadata of a
  * document. The url field is used for the url of the document.

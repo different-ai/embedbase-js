@@ -1,24 +1,24 @@
-import ts from 'typescript';
+import ts from 'typescript'
 
 function extractFunctions(filename: string): string[] {
-  console.log(filename);
-  const program = ts.createProgram([filename], {});
-  const sourceFile = program.getSourceFile(filename);
-  console.log(sourceFile);
+  console.log(filename)
+  const program = ts.createProgram([filename], {})
+  const sourceFile = program.getSourceFile(filename)
+  console.log(sourceFile)
 
-  const collectedFunctions: string[] = [];
+  const collectedFunctions: string[] = []
 
   function visit(node: ts.Node) {
     if (ts.isFunctionDeclaration(node)) {
-      collectedFunctions.push(node.name.text);
+      collectedFunctions.push(node.name.text)
     }
 
-    ts.forEachChild(node, visit);
+    ts.forEachChild(node, visit)
   }
 
-  visit(sourceFile);
+  visit(sourceFile)
 
-  return collectedFunctions;
+  return collectedFunctions
 }
 
-export { extractFunctions as getChunksByJavascript };
+export { extractFunctions as getChunksByJavascript }
