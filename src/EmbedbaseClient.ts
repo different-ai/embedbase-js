@@ -17,7 +17,7 @@ import { camelize } from './utils'
  *
  * An typescript library to interact with Embedbase
  */
-export default class EmbedbaseClien {
+export default class EmbedbaseClient {
   protected fetch?: Fetch
   protected embedbaseApiUrl: string
   protected embedbaseApiKey: string
