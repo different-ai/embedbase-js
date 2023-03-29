@@ -2,7 +2,21 @@ export type Fetch = typeof fetch
 
 export interface BatchAddDocument {
   data: string
-  metadata?: unknown
+  metadata?: Metadata | unknown
+}
+
+
+/**
+ * The Metadata interface defines a structure for the basic metadata of a
+ * document. The url field is used for the url of the document.
+ * This is the best practices to use the metadata field.
+ * You can also add any other fields you want.
+ *
+ * @interface Metadata
+ */
+interface Metadata {
+  url: string
+  [key: string]: unknown
 }
 
 export interface SearchSimilarity {
@@ -10,7 +24,7 @@ export interface SearchSimilarity {
   data: string
   embedding: number[]
   hash: string
-  metadata?: unknown
+  metadata?: Metadata | unknown
 }
 
 export interface SearchData {
@@ -27,7 +41,7 @@ export interface AddDataResult {
   data: string
   embedding: number[]
   hash: string
-  metadata?: unknown
+  metadata?: Metadata | unknown
 }
 export interface AddData {
   results?: AddDataResult[]
