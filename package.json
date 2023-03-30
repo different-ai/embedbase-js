@@ -20,6 +20,13 @@
   "types": "dist/module/index.d.ts",
   "sideEffects": false,
   "repository": "different-ai/embedbase-js",
+  "exports": {
+    "./split": {
+      "import": "./dist/main/split/index.js",
+      "require": "./dist/module/split/index.js",
+      "types": "./dist/module/split/index.d.ts"
+    }
+  },
   "scripts": {
     "clean": "rimraf dist",
     "format": "prettier --write \"{src,test}/**/*.ts\" --ignore-path test/samples/sample.ts",
