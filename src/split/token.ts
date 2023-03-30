@@ -1,14 +1,11 @@
 import { get_encoding, TiktokenEncoding } from '@dqbd/tiktoken'
+import { SplitTextChunk } from './types';
 
 const MAX_CHUNK_LENGTH = 8191
 const EMBEDDING_ENCODING: TiktokenEncoding = 'cl100k_base'
 const CHUNK_OVERLAP = 0
 
-interface SplitTextChunk {
-  chunk: string
-  start: number
-  end: number
-}
+
 export function splitText(
   text: string,
   {

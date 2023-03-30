@@ -23,11 +23,13 @@
   "exports": {
     ".": {
       "import": "./dist/module/index.js",
-      "require": "./dist/main/index.js"
+      "require": "./dist/main/index.js",
+      "types": "./dist/module/index.d.ts"
     },
     "./split": {
       "import": "./dist/module/split/index.js",
-      "require": "./dist/main/split/index.js"
+      "require": "./dist/main/split/index.js",
+      "types": "./dist/module/split/index.d.ts"
     }
   },
   "scripts": {
