@@ -46,7 +46,7 @@ npm i embedbase-js
   - [x] by tokens
   - [x] by sentences
   - [x] for python
-  - [x] for javascript
+  - [ ] for javascript
   - [ ] for markdown
 
 
