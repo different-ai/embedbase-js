@@ -21,10 +21,13 @@
   "sideEffects": false,
   "repository": "different-ai/embedbase-js",
   "exports": {
+    ".": {
+      "import": "./dist/module/index.js",
+      "require": "./dist/main/index.js"
+    },
     "./split": {
-      "import": "./dist/main/split/index.js",
-      "require": "./dist/module/split/index.js",
-      "types": "./dist/module/split/index.d.ts"
+      "import": "./dist/module/split/index.js",
+      "require": "./dist/main/split/index.js"
     }
   },
   "scripts": {
