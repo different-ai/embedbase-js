@@ -31,16 +31,21 @@ export default class EmbedbaseClient {
    * @param embedbaseUrl The unique Embedbase URL which is supplied when you create a new project in your project dashboard.
    * @param embedbaseKey The unique Embedbase Key which is supplied when you create a new project in your project dashboard.
    */
-  constructor(protected embedbaseUrl: string, protected embedbaseKey: string) {
+  constructor(protected embedbaseUrl: string, protected embedbaseKey?: string) {
     if (!embedbaseUrl) throw new Error('embedbaseUrl is required.')
-    if (!embedbaseKey) throw new Error('embedbaseKey is required.')
+    // if url is embedbase cloud (https://api.embedbase.xyz) and no key is provided, throw error
+    if (embedbaseUrl === 'https://api.embedbase.xyz' && !embedbaseKey) {
+      throw new Error('embedbaseKey is required when using Embedbase Cloud.')
+    }
     // strip trailing slash
     const _embedbaseUrl = embedbaseUrl.replace(/\/$/, '')
     this.embedbaseApiUrl = `${_embedbaseUrl}/v1`
     this.embedbaseApiKey = embedbaseKey
     this.headers = {
-      Authorization: `Bearer ${this.embedbaseApiKey}`,
       'Content-Type': 'application/json',
+    }
+    if (this.embedbaseApiKey) {
+      this.headers['Authorization'] = `Bearer ${this.embedbaseApiKey}`
     }
   }
 

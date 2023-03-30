@@ -19,7 +19,6 @@ test('it should create the client connection', async () => {
 
 test('it should throw an error if no valid params are provided', async () => {
   expect(() => createClient('', KEY)).toThrowError('embedbaseUrl is required.')
-  expect(() => createClient(URL, '')).toThrowError('embedbaseKey is required.')
 })
 
 describe('Check if headers are set', () => {

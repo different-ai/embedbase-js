@@ -12,7 +12,7 @@ export type {
 /**
  * Creates a new Embedbase Client.
  */
-export const createClient = (embedbaseUrl: string, embedbaseKey: string) => {
+export const createClient = (embedbaseUrl: string, embedbaseKey?: string) => {
   return new EmbedbaseClient(embedbaseUrl, embedbaseKey)
 }
 
