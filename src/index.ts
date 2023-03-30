@@ -16,10 +16,3 @@ export const createClient = (embedbaseUrl: string, embedbaseKey: string) => {
   return new EmbedbaseClient(embedbaseUrl, embedbaseKey)
 }
 
-export {
-  getChunksSimple,
-  getChunksByNewLine,
-  getChunksByPython,
-  getChunksByJavascript,
-  splitText,
-} from './split/index'

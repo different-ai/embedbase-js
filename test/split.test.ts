@@ -1,6 +1,6 @@
 import { readFileSync } from 'fs'
 import path from 'path'
-import { getChunksSimple, getChunksByNewLine, getChunksByPython, splitText } from '../src/index'
+import { getChunksSimple, getChunksByNewLine, getChunksByPython, splitText } from '../src/split/index'
 
 describe('Split text in sentence and with a param for maxChar', () => {
   it('splits text into sentences no longer than maxChars', () => {
