@@ -7,14 +7,17 @@ export interface BatchAddDocument {
 
 /**
  * The Metadata interface defines a structure for the basic metadata of a
- * document. The url field is used for the url of the document.
- * This is the best practices to use the metadata field.
- * You can also add any other fields you want.
+ * document. It is best practice to use the path field to store the path of the
+ * document chunk in order to get the reference to the original document.
+ * The path is likely an publicly accessible URL, but it can be adapted
+ * to your needs.
+ * For the path, imagine https://perplexity.ai references.
+ * You can also add any other metadata you want to store.
  *
  * @interface Metadata
  */
 interface Metadata {
-  url: string
+  path: string
   [key: string]: unknown
 }
 
