@@ -163,3 +163,9 @@ describe('Check if the client is able to fetch data', () => {
     expect(datasetIds).toContain('baz')
   })
 })
+
+test('should be able to chat', async () => {
+  for await (const res of embedbase.chat('hello')) {
+    console.log(res)
+  }
+})
