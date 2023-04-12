@@ -5,14 +5,18 @@ const MAX_CHUNK_LENGTH = 8191
 const EMBEDDING_ENCODING: TiktokenEncoding = 'cl100k_base'
 const CHUNK_OVERLAP = 0
 
-
+interface SplitTextOptions {
+  maxTokens?: number
+  chunkOverlap?: number
+  encodingName?: TiktokenEncoding
+}
 export function splitText(
   text: string,
   {
     maxTokens = MAX_CHUNK_LENGTH,
     chunkOverlap = CHUNK_OVERLAP,
     encodingName = EMBEDDING_ENCODING,
-  }: { maxTokens?: number; chunkOverlap?: number; encodingName?: TiktokenEncoding },
+  }: SplitTextOptions,
   callback?: (chunk: SplitTextChunk) => void
 ): SplitTextChunk[] {
   if (chunkOverlap >= maxTokens) {
@@ -42,3 +46,27 @@ export function splitText(
   tokenizer.free()
   return chunks
 }
+
+interface MergeOptions {
+  maxLen?: number
+  encodingName?: TiktokenEncoding
+  separator?: string
+}
+// should index chunks
+export const merge = async (chunks: string[], options?: MergeOptions): Promise<string> => {
+  const tokenizer = get_encoding(options?.encodingName || EMBEDDING_ENCODING)
+
+  let curLen = 0;
+  const context = [];
+  for (const chunk of chunks) {
+    const nTokens = tokenizer.encode(chunk).length;
+    curLen += nTokens + 4;
+    if (curLen > (options?.maxLen || 1800)) {
+      break;
+    }
+    context.push(chunk);
+  }
+  return context.join(options?.separator !== undefined ?
+    options.separator :
+    '\n\n###\n\n');
+};

@@ -1,6 +1,7 @@
 import { readFileSync } from 'fs'
 import path from 'path'
 import { getChunksSimple, getChunksByNewLine, getChunksByPython, splitText } from '../src/split/index'
+import { merge } from '../src/split/token'
 
 describe('Split text in sentence and with a param for maxChar', () => {
   it('splits text into sentences no longer than maxChars', () => {
@@ -20,6 +21,13 @@ describe('Splitting based on max tokens', () => {
 
     expect(chunks.map((c) => c.chunk).join('')).toBe(text)
   })
+})
+
+it('merge chunks', async () => {
+  const text = 'AGI'.repeat(50)
+  const chunks = splitText(text, { maxTokens: 50, chunkOverlap: 0 })
+  const merged = await merge(chunks.map((c) => c.chunk), { separator: ''})
+  expect(merged).toBe(text)
 })
 
 describe('Split based on new line', () => {
