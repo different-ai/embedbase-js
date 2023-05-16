@@ -10,7 +10,7 @@ import type {
   BatchAddDocument,
   ClientDatasets,
 } from './types'
-import { camelize } from './utils'
+import { camelize, stream } from './utils'
 
 /**
  * Embedbase Client.
@@ -109,6 +109,18 @@ export default class EmbedbaseClient {
       id: result.id,
       status: data.error ? 'error' : 'success',
     }))
+  }
+
+  public async * chat(prompt: string): AsyncGenerator<string> {
+    const url = 'https://app.embedbase.xyz/api/chat'
+    // const url = 'http://localhost:3000/api/chat'
+    for await (const res of stream(
+      url,
+      JSON.stringify({ prompt }),
+      this.headers,
+    )) {
+      yield res
+    }
   }
 
   dataset(dataset: string): {
